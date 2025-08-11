@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gerador de Mensagem de Auditoria Avançado</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body class="flex flex-col items-center min-h-screen p-4">
+        <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+        <div
+            class="w-full max-w-6xl mx-auto bg-[#242424] rounded-xl shadow-2xl overflow-hidden border border-[#444444]/50">
+            <header class="p-6 border-b border-[#444444]">
+                <h1 class="text-2xl font-bold text-[#F0F0F0]">Gerador de Mensagem de Auditoria</h1>
+                <p class="text-gray-400 mt-1">Cole os dados do commit, adicione os apontamentos e gere a mensagem
+                    padronizada.</p>
+            </header>
+
+            <main id="main-content" class="p-6">
+                <!-- Navegação em Abas -->
+                <div class="border-b border-[#444444] mb-6">
+                    <nav aria-label="Navegação principal">
+                        <div role="tablist" class="flex space-x-2">
+                            <button id="tab-generator-btn" role="tab" aria-selected="true"
+                                aria-controls="tab-generator-content"
+                                class="tab-btn active px-4 py-2 text-sm font-medium text-gray-300 rounded-t-lg hover:bg-[#444444]/50 focus:outline-none focus:ring-2 focus:ring-[#B0B0B0]">
+                                Gerador
+                            </button>
+                            <button id="tab-settings-btn" role="tab" aria-selected="false"
+                                aria-controls="tab-settings-content"
+                                class="tab-btn px-4 py-2 text-sm font-medium text-gray-300 rounded-t-lg hover:bg-[#444444]/50 focus:outline-none focus:ring-2 focus:ring-[#B0B0B0]">
+                                Configurações
+                            </button>
+                            <button id="tab-dashboard-btn" role="tab" aria-selected="false"
+                                aria-controls="tab-dashboard-content"
+                                class="tab-btn px-4 py-2 text-sm font-medium text-gray-300 rounded-t-lg hover:bg-[#444444]/50 focus:outline-none focus:ring-2 focus:ring-[#B0B0B0]">
+                                Dashboard
+                            </button>
+                            <button id="tab-maintenance-btn" role="tab" aria-selected="false"
+                                aria-controls="tab-maintenance-content"
+                                class="tab-btn px-4 py-2 text-sm font-medium text-gray-300 rounded-t-lg hover:bg-[#444444]/50 focus:outline-none focus:ring-2 focus:ring-[#B0B0B0]">
+                                Diretrizes
+                            </button>
+                            <button id="tab-audits-btn" role="tab" aria-selected="false"
+                                aria-controls="tab-audits-content"
+                                class="tab-btn px-4 py-2 text-sm font-medium text-gray-300 rounded-t-lg hover:bg-[#444444]/50 focus:outline-none focus:ring-2 focus:ring-[#B0B0B0]">
+                                Auditorias Salvas
+                            </button>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- Conteúdo das Abas -->
+                <section id="tab-generator-content" role="tabpanel" aria-labelledby="tab-generator-btn"
+                    class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                        <!-- Coluna da Esquerda: Entrada e Detalhes -->
+                        <div class="flex flex-col space-y-6">
+                            <div>
+                                <label for="commit-info" class="block text-sm font-medium text-[#F0F0F0] mb-2">1. Cole
+                                    as informações do commit aqui:</label>
+                                <textarea id="commit-info" rows="8"
+                                    class="w-full p-3 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] text-[#F0F0F0] placeholder-gray-500"
+                                    placeholder="Revision: 42212..."></textarea>
+                            </div>
+
+                            <div class="p-4 bg-[#1A1A1A]/50 rounded-lg border border-[#444444]/50">
+                                <h3 class="text-lg font-semibold mb-3">2. Adicionar Apontamento</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="file-select"
+                                            class="block text-sm font-medium text-[#F0F0F0]">Arquivo</label>
+                                        <select id="file-select"
+                                            class="mt-1 block w-full pl-3 pr-10 py-2 bg-[#1F1F1F] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] sm:text-sm text-[#F0F0F0]"></select>
+                                    </div>
+                                    <div>
+                                        <label for="guideline-search-general"
+                                            class="block text-sm font-medium text-[#F0F0F0]">Busca Diretriz
+                                            Geral</label>
+                                        <input type="text" id="guideline-search-general"
+                                            class="mt-1 block w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] text-[#F0F0F0]"
+                                            placeholder="Digite para buscar...">
+                                        <select id="guideline-select-general" aria-label="Lista de diretrizes gerais"
+                                            class="mt-1 block w-full pl-3 pr-10 py-2 bg-[#1F1F1F] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] sm:text-sm text-[#F0F0F0]"
+                                            size="4"></select>
+                                    </div>
+                                    <div>
+                                        <label for="guideline-search-fivewin"
+                                            class="block text-sm font-medium text-[#F0F0F0]">Busca Diretriz
+                                            Fivewin</label>
+                                        <input type="text" id="guideline-search-fivewin"
+                                            class="mt-1 block w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] text-[#F0F0F0]"
+                                            placeholder="Digite para buscar...">
+                                        <select id="guideline-select-fivewin" aria-label="Lista de diretrizes Fivewin"
+                                            class="mt-1 block w-full pl-3 pr-10 py-2 bg-[#1F1F1F] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] sm:text-sm text-[#F0F0F0]"
+                                            size="3"></select>
+                                    </div>
+                                    <div>
+                                        <label for="lines" class="block text-sm font-medium text-[#F0F0F0]">Linha(s)
+                                            (Opcional)</label>
+                                        <input type="text" id="lines"
+                                            class="mt-1 block w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] text-[#F0F0F0]"
+                                            placeholder="Ex: 100 ou 100-105" aria-invalid="false">
+                                    </div>
+                                    <button id="add-problem-btn"
+                                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#F0F0F0] bg-[#3E5641] hover:bg-[#2F4031] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B0B0B0] focus:ring-offset-[#1A1A1A]">
+                                        Adicionar Problema
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coluna da Direita: Saída e Geração -->
+                        <div class="flex flex-col space-y-6">
+                            <div>
+                                <h3 class="text-lg font-semibold mb-2">3. Apontamentos Adicionados</h3>
+                                <div id="problems-list" aria-live="polite"
+                                    class="space-y-2 p-3 bg-[#1A1A1A] rounded-md min-h-[120px] border border-[#444444]/50">
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <label for="output-message" class="block text-sm font-medium text-[#F0F0F0]">4.
+                                        Mensagem Gerada</label>
+                                    <select id="template-selector" aria-label="Selecionar template de mensagem"
+                                        class="block pl-3 pr-10 py-1 bg-[#1F1F1F] border border-[#444444] rounded-md focus:outline-none focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] sm:text-sm text-[#F0F0F0]"></select>
+                                </div>
+                                <div class="relative">
+                                    <textarea id="output-message" rows="12" readonly
+                                        class="w-full p-3 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm text-[#F0F0F0] placeholder-gray-500"></textarea>
+                                    <button id="copy-btn" aria-label="Copiar mensagem gerada"
+                                        class="absolute top-2 right-2 bg-[#444444] hover:bg-[#555555] text-[#F0F0F0] font-bold py-1 px-3 rounded text-xs">
+                                        Copiar
+                                    </button>
+                                </div>
+                                <button id="clear-btn"
+                                    class="w-full mt-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#F0F0F0] bg-[#444444] hover:bg-[#555555] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B0B0B0] focus:ring-offset-[#1A1A1A]">
+                                    Limpar Campos para Nova Auditoria
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-settings-content" role="tabpanel" aria-labelledby="tab-settings-btn"
+                    class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Configurações Gerais</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="auditor-name" class="block text-sm font-medium text-[#F0F0F0]">Nome do
+                                        Auditor</label>
+                                    <input type="text" id="auditor-name"
+                                        class="mt-1 block w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm focus:ring-2 focus:ring-[#B0B0B0] focus:border-[#B0B0B0] text-[#F0F0F0]"
+                                        placeholder="Seu nome completo">
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <label for="quick-mode-toggle" class="text-sm font-medium text-[#F0F0F0]">Modo
+                                        Rápido (com teclado)</label>
+                                    <label class="switch">
+                                        <input type="checkbox" id="quick-mode-toggle">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <button id="save-settings-btn"
+                                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#F0F0F0] bg-[#3E5641] hover:bg-[#2F4031] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B0B0B0] focus:ring-offset-[#1A1A1A]">
+                                    Salvar Configurações
+                                </button>
+                                <div id="settings-feedback" aria-live="polite" class="text-sm text-green-400"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Templates de Mensagem</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="template-name" class="block text-sm font-medium text-[#F0F0F0]">Nome do
+                                        Template</label>
+                                    <input type="text" id="template-name"
+                                        class="mt-1 block w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md shadow-sm text-sm"
+                                        placeholder="Ex: Padrão Tarde">
+                                </div>
+                                <div>
+                                    <label for="template-content"
+                                        class="block text-sm font-medium text-[#F0F0F0]">Conteúdo do Template</label>
+                                    <textarea id="template-content" rows="6"
+                                        class="w-full p-3 bg-[#1F1F1F] border border-[#444444] rounded-md text-sm"
+                                        placeholder="Use {saudacao}, {os}, {revisao}, {apontamentos}, {auditor}"></textarea>
+                                    <p class="text-xs text-gray-500 mt-1">Placeholders: {saudacao}, {os}, {revisao},
+                                        {apontamentos}, {auditor}</p>
+                                </div>
+                                <button id="save-template-btn"
+                                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-[#F0F0F0] bg-[#3E5641] hover:bg-[#2F4031]">Salvar
+                                    Template</button>
+                            </div>
+                            <div class="mt-6">
+                                <h4 class="text-md font-semibold mb-2">Templates Salvos</h4>
+                                <div id="saved-templates-list" class="space-y-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-dashboard-content" role="tabpanel" aria-labelledby="tab-dashboard-btn"
+                    class="tab-content hidden">
+                    <h2 class="text-xl font-bold mb-4">Dashboard de Métricas (Últimos 30 dias)</h2>
+                    <div class="grid grid-cols-1 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Top 5 Diretrizes Violadas</h3>
+                            <div class="p-4 bg-[#1F1F1F] rounded-lg border border-[#444444]">
+                                <canvas id="guidelines-chart" role="img"
+                                    aria-label="Gráfico de barras das 5 diretrizes mais violadas"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Apontamentos por Desenvolvedor</h3>
+                            <div class="p-4 bg-[#1F1F1F] rounded-lg border border-[#444444]">
+                                <canvas id="authors-chart" role="img"
+                                    aria-label="Gráfico de barras de apontamentos por desenvolvedor"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-maintenance-content" role="tabpanel" aria-labelledby="tab-maintenance-btn"
+                    class="tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Coluna de Diretrizes Gerais -->
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Diretrizes Gerais</h3>
+                            <div id="maintenance-general-list"
+                                class="space-y-2 max-h-64 overflow-y-auto mb-4 p-2 border border-[#444444] rounded-md">
+                            </div>
+                            <div class="p-4 bg-[#1A1A1A]/50 rounded-lg border border-[#444444]/50">
+                                <h4 id="form-title-general" class="text-md font-semibold mb-2">Adicionar Nova Diretriz
+                                    Geral</h4>
+                                <div class="space-y-2">
+                                    <input type="hidden" id="editing-index-general">
+                                    <label for="short-desc-general" class="sr-only">Descrição resumida</label>
+                                    <input type="text" id="short-desc-general" placeholder="Descrição resumida"
+                                        class="w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md text-sm">
+                                    <label for="full-desc-general" class="sr-only">Descrição completa</label>
+                                    <textarea id="full-desc-general" placeholder="Descrição completa" rows="3"
+                                        class="w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md text-sm"></textarea>
+                                    <button id="save-guideline-general"
+                                        class="w-full py-2 px-4 rounded-md text-sm font-medium text-[#F0F0F0] bg-[#3E5641] hover:bg-[#2F4031]">Adicionar</button>
+                                    <button id="cancel-edit-general"
+                                        class="w-full py-2 px-4 rounded-md text-sm font-medium text-[#F0F0F0] bg-[#444444] hover:bg-[#555555] hidden">Cancelar
+                                        Edição</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Coluna de Diretrizes Fivewin -->
+                        <div>
+                            <h3 class="text-lg font-semibold mb-3">Diretrizes Fivewin</h3>
+                            <div id="maintenance-fivewin-list"
+                                class="space-y-2 max-h-64 overflow-y-auto mb-4 p-2 border border-[#444444] rounded-md">
+                            </div>
+                            <div class="p-4 bg-[#1A1A1A]/50 rounded-lg border border-[#444444]/50">
+                                <h4 id="form-title-fivewin" class="text-md font-semibold mb-2">Adicionar Nova Diretriz
+                                    Fivewin</h4>
+                                <div class="space-y-2">
+                                    <input type="hidden" id="editing-index-fivewin">
+                                    <label for="short-desc-fivewin" class="sr-only">Descrição resumida</label>
+                                    <input type="text" id="short-desc-fivewin" placeholder="Descrição resumida"
+                                        class="w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md text-sm">
+                                    <label for="full-desc-fivewin" class="sr-only">Descrição completa</label>
+                                    <textarea id="full-desc-fivewin" placeholder="Descrição completa" rows="3"
+                                        class="w-full p-2 bg-[#1F1F1F] border border-[#444444] rounded-md text-sm"></textarea>
+                                    <button id="save-guideline-fivewin"
+                                        class="w-full py-2 px-4 rounded-md text-sm font-medium text-[#F0F0F0] bg-[#3E5641] hover:bg-[#2F4031]">Adicionar</button>
+                                    <button id="cancel-edit-fivewin"
+                                        class="w-full py-2 px-4 rounded-md text-sm font-medium text-[#F0F0F0] bg-[#444444] hover:bg-[#555555] hidden">Cancelar
+                                        Edição</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tab-audits-content" role="tabpanel" aria-labelledby="tab-audits-btn"
+                    class="tab-content hidden">
+                    <h2 class="text-xl font-bold mb-4">Manutenção de Auditorias Salvas</h2>
+                    <div id="audits-maintenance-list" class="space-y-3"></div>
+                </section>
+
+            </main>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+
+</html>
