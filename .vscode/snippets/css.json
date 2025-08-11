@@ -1,0 +1,46 @@
+{
+    "CSS Reset": {
+        "prefix": "reset",
+        "body": [
+            "* {",
+            "    margin: 0;",
+            "    padding: 0;",
+            "    box-sizing: border-box;",
+            "}",
+            "",
+            "body {",
+            "    font-family: Arial, sans-serif;",
+            "    line-height: 1.6;",
+            "    color: #333;",
+            "}"
+        ],
+        "description": "Basic CSS reset"
+    },
+    "Flexbox Container": {
+        "prefix": "flex",
+        "body": [
+            "display: flex;",
+            "justify-content: $1;",
+            "align-items: $2;"
+        ],
+        "description": "Flexbox container properties"
+    },
+    "Grid Container": {
+        "prefix": "grid",
+        "body": [
+            "display: grid;",
+            "grid-template-columns: $1;",
+            "grid-gap: $2;"
+        ],
+        "description": "CSS Grid container properties"
+    },
+    "Media Query": {
+        "prefix": "media",
+        "body": [
+            "@media (max-width: ${1:768px}) {",
+            "    $2",
+            "}"
+        ],
+        "description": "Responsive media query"
+    }
+}

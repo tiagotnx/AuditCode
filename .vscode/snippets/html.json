@@ -1,0 +1,41 @@
+{
+    "HTML5 Boilerplate": {
+        "prefix": "html5",
+        "body": [
+            "<!DOCTYPE html>",
+            "<html lang=\"pt-BR\">",
+            "<head>",
+            "    <meta charset=\"UTF-8\">",
+            "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+            "    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
+            "    <title>$1</title>",
+            "    <link rel=\"stylesheet\" href=\"styles.css\">",
+            "</head>",
+            "<body>",
+            "    $2",
+            "    <script src=\"script.js\"></script>",
+            "</body>",
+            "</html>"
+        ],
+        "description": "HTML5 boilerplate with UTF-8 encoding"
+    },
+    "Audit Section": {
+        "prefix": "audit-section",
+        "body": [
+            "<section class=\"audit-section\">",
+            "    <h2>$1</h2>",
+            "    <div class=\"audit-content\">",
+            "        $2",
+            "    </div>",
+            "</section>"
+        ],
+        "description": "Audit section template"
+    },
+    "Meta UTF-8": {
+        "prefix": "meta-utf8",
+        "body": [
+            "<meta charset=\"UTF-8\">"
+        ],
+        "description": "UTF-8 meta tag"
+    }
+}

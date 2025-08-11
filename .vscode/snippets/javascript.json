@@ -1,0 +1,45 @@
+{
+    "Console Log": {
+        "prefix": "cl",
+        "body": [
+            "console.log($1);"
+        ],
+        "description": "Console log"
+    },
+    "Function": {
+        "prefix": "func",
+        "body": [
+            "function ${1:functionName}(${2:parameters}) {",
+            "    $3",
+            "}"
+        ],
+        "description": "Function declaration"
+    },
+    "Arrow Function": {
+        "prefix": "arrow",
+        "body": [
+            "const ${1:functionName} = (${2:parameters}) => {",
+            "    $3",
+            "};"
+        ],
+        "description": "Arrow function"
+    },
+    "Document Ready": {
+        "prefix": "ready",
+        "body": [
+            "document.addEventListener('DOMContentLoaded', function() {",
+            "    $1",
+            "});"
+        ],
+        "description": "Document ready event listener"
+    },
+    "Event Listener": {
+        "prefix": "listen",
+        "body": [
+            "${1:element}.addEventListener('${2:event}', function(${3:e}) {",
+            "    $4",
+            "});"
+        ],
+        "description": "Event listener"
+    }
+}

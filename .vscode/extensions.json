@@ -1,0 +1,20 @@
+{
+    "recommendations": [
+        // Extensões essenciais para desenvolvimento web
+        "ms-vscode.vscode-html-css-support",
+        "bradlc.vscode-tailwindcss",
+        "formulahendry.auto-rename-tag",
+        "ritwickdey.liveserver",
+        // Formatação e linting
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-json",
+        "christian-kohler.path-intellisense",
+        // Produtividade
+        "ms-vscode.vscode-intellicode",
+        "streetsidesoftware.code-spell-checker",
+        "ms-vscode.vscode-color-picker",
+        // Temas e Ícones
+        "pkief.material-icon-theme",
+        "zhuangtongfa.material-theme"
+    ]
+}
